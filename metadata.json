@@ -1,0 +1,7 @@
+{
+  "name": "Yee's Christmas Wishes 2",
+  "description": "An interactive 3D Christmas experience featuring a particle-based Christmas tree, PBR decorated ornaments, and a glowing heart topper, with gesture recognition and intuitive button controls.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
