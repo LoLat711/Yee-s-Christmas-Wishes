@@ -13,11 +13,12 @@ interface UIOverlayProps {
 
 const WISH_MESSAGES = [
   "今天要开心哟~",
+  "今天要开心哟",
   "生活顺利！",
-  "不要生病，身体棒棒，快乐健康！",
-  "勇敢小（大）朋友，困难全踢走！",
-  "别怕美好的一切消失，咱们先来让它存在",
-  "朝前走时也别忘了抬头望，我们都不要浪费月亮",
+  "不必飞太高，做一只笨鸟",
+  "准备就绪要做个发光体",
+  "找到你是我最伟大的成功",
+  "去追去闯，去乘风破浪",
   "好事总会发生在下一个转弯",
   "每个梦醒时分，一切成真",
   "幸得与你同乘",
@@ -35,11 +36,18 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [wishContent, setWishContent] = useState('');
+  const lastWishIndex = useRef<number>(-1);
 
   // Generate a random wish when the modal opens
   useEffect(() => {
     if (isWished) {
-      const randomIndex = Math.floor(Math.random() * WISH_MESSAGES.length);
+      let randomIndex;
+      // Ensure we don't pick the same message twice in a row
+      do {
+        randomIndex = Math.floor(Math.random() * WISH_MESSAGES.length);
+      } while (randomIndex === lastWishIndex.current && WISH_MESSAGES.length > 1);
+      
+      lastWishIndex.current = randomIndex;
       setWishContent(WISH_MESSAGES[randomIndex]);
     }
   }, [isWished]);
@@ -78,9 +86,9 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
   return (
     <div className="absolute inset-0 pointer-events-none flex flex-col justify-between p-8 text-white">
       {/* Header */}
-      <div className="text-left animate-fade-in pointer-events-auto absolute top-5 left-8 z-10">
-        <h1 className="text-[1.75rem] md:text-[2.15rem] font-bold tracking-tighter mb-1 text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-pink-300 to-rose-500 drop-shadow-lg">
-          Yee's Christmas Wishes <span className="ml-2">千千许愿树</span>
+      <div className="text-left animate-fade-in pointer-events-auto absolute top-4 left-4 md:top-5 md:left-8 z-10">
+        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tighter mb-1 text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-pink-300 to-rose-500 drop-shadow-lg">
+          Yee's Christmas Wishes <span className="block sm:inline ml-0 sm:ml-2 text-lg sm:text-inherit mt-1 sm:mt-0">千千许愿树</span>
         </h1>
       </div>
 
